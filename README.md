@@ -1,8 +1,9 @@
 # Hanko
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/hanko`. To experiment with that code, run `bin/console` for an interactive prompt.
+Hanko add a asset fingerprint in query string of Rails asset url(image, javascript, stylesheet, etc).  
+Like this, ```/images/kaeruspoon.jpg?1af6d6f2f682f76f80e606aeaaee1680```  
 
-TODO: Delete this and the text above, and describe your gem
+Hanko would use when your rails app skipped Sprocket.
 
 ## Installation
 
@@ -22,7 +23,12 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+The asset fingerprint of Hanko is MD5 digest of asset file content.  
+You could use timestamp the asset fingerprint.  
+For example ```config/application.rb```
+```ruby
+config.assets.hanko = :timestamp
+```
 
 ## Development
 
