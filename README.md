@@ -1,5 +1,7 @@
 # Hanko
 
+[![Gem Version](https://badge.fury.io/rb/hanko.svg)](http://badge.fury.io/rb/hanko) [![Build Status](https://travis-ci.org/tsukasaoishi/hanko.svg?branch=master)](https://travis-ci.org/tsukasaoishi/hanko) [![Code Climate](https://codeclimate.com/github/tsukasaoishi/hanko/badges/gpa.svg)](https://codeclimate.com/github/tsukasaoishi/hanko)
+
 Hanko add a asset fingerprint in query string of Rails asset url(image, javascript, stylesheet, etc).  
 Like this, ```/images/kaeruspoon.jpg?1af6d6f2f682f76f80e606aeaaee1680```  
 

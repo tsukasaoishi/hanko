@@ -7,9 +7,9 @@ appraise "rails40" do
 end
 
 appraise "rails41" do
-  gem "actionview", "~> 4.1.0"
+  gem "actionpack", "~> 4.1.0"
 end
 
 appraise "rails42" do
-  gem "actionview", "~> 4.2.0"
+  gem "actionpack", "~> 4.2.0"
 end
