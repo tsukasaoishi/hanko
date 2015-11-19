@@ -25,11 +25,11 @@ Or install it yourself as:
 
 ## Usage
 
-The asset fingerprint of Hanko is MD5 digest of asset file content.  
-You could use timestamp the asset fingerprint.  
+The asset fingerprint of Hanko is Digest::SHA256 digest of asset file content.  
+You could use Digest::Base class the asset fingerprint.  
 For example ```config/application.rb```
 ```ruby
-config.assets.hanko = :timestamp
+config.hanko.digest_class = Digest::MD5
 ```
 
 ## Development
