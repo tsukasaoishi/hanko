@@ -18,3 +18,5 @@ unless defined?(Minitest::Test)
 end
 
 Minitest::Test.extend ExtendMinitest
+
+require 'action_view/test_case'

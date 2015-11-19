@@ -28,7 +28,6 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_dependency "actionpack", ">= 3.2"
-  spec.add_dependency "activesupport", ">= 3.2"
 
   spec.add_development_dependency "railties", ">= 3.2"
   spec.add_development_dependency "bundler", "~> 1.10"
