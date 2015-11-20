@@ -20,3 +20,8 @@ end
 Minitest::Test.extend ExtendMinitest
 
 require 'action_view/test_case'
+if defined?(ActionView::Helpers::AssetTagHelper::AssetPaths)
+  HankoTarget = Hanko::AssetPaths
+else
+  HankoTarget = Hanko::AssetUrlHelper
+end

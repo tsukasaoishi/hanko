@@ -1,7 +1,8 @@
 require "hanko/version"
+require "hanko/fingerprint"
 require "action_view"
 
-if defined?(ActionPack) && ActionPack::VERSION::MAJOR == 3
+if defined?(ActionView::Helpers::AssetTagHelper::AssetPaths)
   require "hanko/asset_paths"
   ActionView::Helpers::AssetTagHelper::AssetPaths.__send__(:prepend, Hanko::AssetPaths)
 else

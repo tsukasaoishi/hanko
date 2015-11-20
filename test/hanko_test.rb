@@ -1,28 +1,36 @@
 require 'test_helper'
+require 'expect_set'
 
 class HankoTest < ActionView::TestCase
-  if ActionPack::VERSION::MAJOR == 3
-    tests Hanko::AssetPaths
-  else
-    tests Hanko::AssetUrlHelper
-  end
+  tests HankoTarget
+  include ExpectSet
 
   def setup
     controller.config.assets_dir = File.join(__dir__, 'public')
   end
 
+  def error_message(digest_class)
+    "error digest class #{digest_class.name}"
+  end
+
   test "image_path add fingerprint to generated url" do
-    expect_path = "/images/tsuka.png?ec0460828247a87f4a8f78a28a3b0545546833f0b3bd186f5352bb8bb8c673ca"
-    assert_equal expect_path, image_path("tsuka.png")
+    each_digests(type: :image) do |digest_class, fingerprint|
+      assert_equal "/images/tsuka.png?#{fingerprint}", image_path("tsuka.png"),
+        error_message(digest_class)
+    end
   end
 
   test "javascript_path add fingerprint to generated url" do
-    expect_path = "/javascripts/tsuka.js?035354580de79c3d4a7968c974df2ae76befa53dc1f3597507db0427dea4d09e"
-    assert_equal expect_path, javascript_path("tsuka")
+    each_digests(type: :js) do |digest_class, fingerprint|
+      assert_equal "/javascripts/tsuka.js?#{fingerprint}", javascript_path("tsuka"),
+        error_message(digest_class)
+    end
   end
 
   test "stylesheet_path add fingerprint to generated url" do
-    expect_path = "/stylesheets/tsuka.css?5b59e7f86cc54cd79e0d6c12af4d053eaef6cc0be92598e5be335f83e036be14"
-    assert_equal expect_path, stylesheet_path("tsuka")
+    each_digests(type: :css) do |digest_class, fingerprint|
+      assert_equal "/stylesheets/tsuka.css?#{fingerprint}", stylesheet_path("tsuka"),
+        error_message(digest_class)
+    end
   end
 end
