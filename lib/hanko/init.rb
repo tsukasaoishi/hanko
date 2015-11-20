@@ -5,7 +5,7 @@ module Hanko
     end
 
     def ready
-      Hankan::Fingerprint.digest_class = @digest_class if @digest_class
+      Hanko::Fingerprint.digest_class = @digest_class if @digest_class
 
       if exist_asset_paths?
         prepend_asset_paths
