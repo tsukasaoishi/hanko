@@ -16,7 +16,7 @@ module Hanko
 
     def prepend_asset_url_helper
       require "hanko/asset_url_helper"
-      ActionView::Helpers::AssetUrlHelper.__send__(
+      ActionView::Base.__send__(
         :prepend, Hanko::AssetUrlHelper
       )
     end
