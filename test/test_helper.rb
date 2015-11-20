@@ -1,5 +1,4 @@
 $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
-require 'hanko'
 
 require 'minitest/autorun'
 require "minitest/reporters"
@@ -20,6 +19,9 @@ end
 Minitest::Test.extend ExtendMinitest
 
 require 'action_view/test_case'
+require 'hanko'
+Hanko::Init.new.ready
+
 if defined?(ActionView::Helpers::AssetTagHelper::AssetPaths)
   HankoTarget = Hanko::AssetPaths
 else
