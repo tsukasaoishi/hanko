@@ -1,21 +1,23 @@
 module Hanko
   module AssetUrlHelper
-    URI_REGEXP = ::ActionView::Helpers::AssetUrlHelper::URI_REGEXP
+    URI_REGEXP = %r{^(?:[-a-z]+://|cid:|data:|//)}i
 
     def asset_path(source, options = {})
       source = source.to_s
-      return "" unless source.present?
-      return source if source =~ URI_REGEXP
+      return "" if source.empty?
+      return source if URI_REGEXP === source
 
-      tail, source = source[/([\?#].+)$/], source.sub(/([\?#].+)$/, '')
+      if index = source.index(/[?#]/)
+        source, tail = source[0, index], source[index..-1]
+      end
 
       if extname = compute_asset_extname(source, options)
         source = "#{source}#{extname}"
       end
 
       if source[0] != ?/
-        # The patch is only here
-        source = compute_asset_path(source, options.merge(fingerprint: tail.nil?))
+        options[:fingerprint] = !tail
+        source = compute_asset_path(source, options)
       end
 
       relative_url_root = defined?(config.relative_url_root) && config.relative_url_root
