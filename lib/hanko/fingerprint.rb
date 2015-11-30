@@ -21,7 +21,7 @@ module Hanko
       end
 
       def generate_pon(assets_dir, source)
-        path = File.join(assets_dir, source)
+        path = File.join(assets_dir || '', source)
         File.exist?(path) ? file_digest(path) : ''
       end
 
