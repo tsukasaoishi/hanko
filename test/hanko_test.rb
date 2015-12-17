@@ -48,4 +48,8 @@ class HankoTest < ActionView::TestCase
     assert_equal "/javascripts/tsuka.js?a=1", javascript_path("tsuka.js?a=1")
     assert_equal "/javascripts/tsuka.js#1", javascript_path("tsuka.js#1")
   end
+
+  test "do not add fingerprint to path of directory" do
+    assert_equal "/images/dummy_dir", image_path("dummy_dir")
+  end
 end
