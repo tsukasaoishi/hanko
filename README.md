@@ -32,6 +32,11 @@ For example ```config/application.rb```
 config.hanko.digest_class = Digest::MD5
 ```
 
+If you would like to disable caching, sets false to ``config.hanko.cachable```.
+```ruby
+config.hanko.cachable = false
+```
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake test` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
