@@ -3,10 +3,16 @@ require 'digest/sha2'
 module Hanko
   class Fingerprint
     class << self
-      attr_writer :digest_class
+      attr_writer :digest_class, :cachable
 
       def pon(assets_dir, source)
-        cached_pon[source] ||= generate_pon(assets_dir, source)
+        fingerprint = generate_pon(assets_dir, source)
+
+        if cachable?
+          cached_pon[source] ||= fingerprint
+        else
+          fingerprint
+        end
       end
 
       def digest_class=(klass)
@@ -31,6 +37,10 @@ module Hanko
 
       def digest_class
         @digest_class || ::Digest::SHA256
+      end
+
+      def cachable?
+        @cachable != false
       end
     end
   end
