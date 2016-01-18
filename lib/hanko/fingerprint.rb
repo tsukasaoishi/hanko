@@ -6,12 +6,10 @@ module Hanko
       attr_writer :digest_class, :cachable
 
       def pon(assets_dir, source)
-        fingerprint = generate_pon(assets_dir, source)
-
         if cachable?
-          cached_pon[source] ||= fingerprint
+          cached_pon[source] ||= generate_pon(assets_dir, source)
         else
-          fingerprint
+          generate_pon(assets_dir, source)
         end
       end
 
