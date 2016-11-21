@@ -10,28 +10,47 @@ class HankoTest < ActionView::TestCase
     controller.config.assets_dir = File.join(__dir__, 'public')
   end
 
-  def error_message(digest_class)
-    "error digest class #{digest_class.name}"
+  def error_message(digest_class, prefix: nil, suffix: nil)
+    "error digest class #{digest_class.name} (prefix:#{prefix} suffix:#{suffix})"
   end
 
+  def fingerprint(fp, options)
+    fp = "#{options[:prefix]}#{fp}" if options[:prefix]
+    fp = "#{fp}#{options[:suffix]}" if options[:suffix]
+    fp
+  end
+
+  prefix_suffix_options = [
+    {},
+    { prefix: "test1-" },
+    { suffix: "-test2" },
+    { prefix: "test3-", suffix: "-test4" }
+  ]
+
   test "image_path add fingerprint to generated url" do
-    each_digests(type: :image) do |digest_class, fingerprint|
-      assert_equal "/images/tsuka.png?#{fingerprint}", image_path("tsuka.png"),
-        error_message(digest_class)
+    prefix_suffix_options.each do |options|
+      each_digests(options.merge(type: :image)) do |digest_class, fp|
+        assert_equal "/images/tsuka.png?#{fingerprint(fp, options)}", image_path("tsuka.png"),
+          error_message(digest_class)
+      end
     end
   end
 
   test "javascript_path add fingerprint to generated url" do
-    each_digests(type: :js) do |digest_class, fingerprint|
-      assert_equal "/javascripts/tsuka.js?#{fingerprint}", javascript_path("tsuka"),
-        error_message(digest_class)
+    prefix_suffix_options.each do |options|
+      each_digests(options.merge(type: :js)) do |digest_class, fp|
+        assert_equal "/javascripts/tsuka.js?#{fingerprint(fp, options)}", javascript_path("tsuka"),
+          error_message(digest_class)
+      end
     end
   end
 
   test "stylesheet_path add fingerprint to generated url" do
-    each_digests(type: :css) do |digest_class, fingerprint|
-      assert_equal "/stylesheets/tsuka.css?#{fingerprint}", stylesheet_path("tsuka"),
-        error_message(digest_class)
+    prefix_suffix_options.each do |options|
+      each_digests(options.merge(type: :css)) do |digest_class, fp|
+        assert_equal "/stylesheets/tsuka.css?#{fingerprint(fp, options)}", stylesheet_path("tsuka"),
+          error_message(digest_class)
+      end
     end
   end
 

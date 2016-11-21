@@ -3,7 +3,7 @@ require 'digest/sha2'
 module Hanko
   class Fingerprint
     class << self
-      attr_writer :digest_class, :cachable
+      attr_writer :cachable, :prefix, :suffix
 
       def pon(assets_dir, source)
         if cachable?
@@ -26,7 +26,11 @@ module Hanko
 
       def generate_pon(assets_dir, source)
         path = File.join(assets_dir || '', source)
-        File.file?(path) ? file_digest(path) : ''
+        return '' unless File.file?(path)
+        fp = file_digest(path)
+        fp = "#{prefix}#{fp}" if prefix
+        fp = "#{fp}#{suffix}" if suffix
+        fp
       end
 
       def file_digest(path)
@@ -34,11 +38,21 @@ module Hanko
       end
 
       def digest_class
-        @digest_class || ::Digest::SHA256
+        return @digest_class if defined?(@digest_class)
+        ::Digest::SHA256
       end
 
       def cachable?
-        @cachable != false
+        return @cachable if defined?(@cachable)
+        true
+      end
+
+      def prefix
+        @prefix if defined?(@prefix)
+      end
+
+      def suffix
+        @suffix if defined?(@suffix)
       end
     end
   end
