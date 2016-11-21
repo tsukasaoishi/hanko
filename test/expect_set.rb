@@ -42,9 +42,11 @@ module ExpectSet
     }
   }
 
-  def each_digests(type: nil)
+  def each_digests(type: nil, prefix: nil, suffix: nil)
     FINGERPRINT.each do |digest_class, fingerprint|
       Hanko::Fingerprint.digest_class = digest_class
+      Hanko::Fingerprint.prefix = prefix
+      Hanko::Fingerprint.suffix = suffix
       yield(digest_class, fingerprint[type])
     end
   end
