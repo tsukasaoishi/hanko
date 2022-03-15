@@ -1,0 +1,36 @@
+version: 2.1
+
+jobs:
+  test:
+    docker:
+      - image: cimg/ruby:3.1.0
+    environment:
+      - BUNDLE_PATH: /home/circleci/bundle
+    steps:
+      - checkout
+      - run:
+          name: build checksum target
+          command: |
+            cat hanko.gemspec gemfiles/* > /tmp/gem_target
+      - restore_cache:
+          keys:
+            - gem-202203151500-{{ checksum "/tmp/gem_target"  }}-{{ .Branch }}
+            - gem-202203151500-{{ checksum "/tmp/gem_target"  }}-
+            - gem-202203151500-
+      - run:
+          name: bundle install
+          command: |
+            bundle install
+            bundle exec appraisal install
+      - save_cache:
+          key: gem-202203151500-{{ checksum "/tmp/gem_target"  }}-{{ .Branch }}
+          paths: /home/circleci/bundle
+      - run:
+          name: test
+          command: bundle exec appraisal rake test
+
+
+workflows:
+  ci:
+    jobs:
+      - test
