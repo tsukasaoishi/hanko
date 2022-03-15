@@ -29,7 +29,7 @@ class HankoTest < ActionView::TestCase
 
   test "image_path add fingerprint to generated url" do
     prefix_suffix_options.each do |options|
-      each_digests(options.merge(type: :image)) do |digest_class, fp|
+      each_digests(**options.merge(type: :image)) do |digest_class, fp|
         assert_equal "/images/tsuka.png?#{fingerprint(fp, options)}", image_path("tsuka.png"),
           error_message(digest_class)
       end
@@ -38,7 +38,7 @@ class HankoTest < ActionView::TestCase
 
   test "javascript_path add fingerprint to generated url" do
     prefix_suffix_options.each do |options|
-      each_digests(options.merge(type: :js)) do |digest_class, fp|
+      each_digests(**options.merge(type: :js)) do |digest_class, fp|
         assert_equal "/javascripts/tsuka.js?#{fingerprint(fp, options)}", javascript_path("tsuka"),
           error_message(digest_class)
       end
@@ -47,7 +47,7 @@ class HankoTest < ActionView::TestCase
 
   test "stylesheet_path add fingerprint to generated url" do
     prefix_suffix_options.each do |options|
-      each_digests(options.merge(type: :css)) do |digest_class, fp|
+      each_digests(**options.merge(type: :css)) do |digest_class, fp|
         assert_equal "/stylesheets/tsuka.css?#{fingerprint(fp, options)}", stylesheet_path("tsuka"),
           error_message(digest_class)
       end
